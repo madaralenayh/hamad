@@ -8,14 +8,14 @@ export const COLORS = {
   grey: '#9A948A',
 };
 
-// Placeholder Arabic font until Thmanyah files are added to public/fonts/.
+// Brand fonts: Thmanyah Sans (Arabic) and Thmanyah Serif Display (Latin).
 export const AR_FONT = 'FathArabic';
 export const EN_FONT = 'FathSerif';
 
 const faces: [string, string, string][] = [
-  [AR_FONT, 'fonts/tajawal-arabic-800-normal.woff2', '800'],
-  [AR_FONT, 'fonts/tajawal-arabic-700-normal.woff2', '700'],
-  [EN_FONT, 'fonts/playfair-display-latin-900-normal.woff2', '900'],
+  [AR_FONT, 'fonts/thmanyahsans-Black.woff2', '800'],
+  [AR_FONT, 'fonts/thmanyahsans-Bold.woff2', '700'],
+  [EN_FONT, 'fonts/thmanyahserifdisplay-Black.woff2', '900'],
 ];
 
 const handle = delayRender('fonts');

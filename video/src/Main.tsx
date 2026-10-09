@@ -45,7 +45,7 @@ export const Main: React.FC = () => (
     </Page>
 
     <Page from={19.2} to={23.2}>
-      <Line from={19.5} to={21} size={150} words={[{t: 'وهذي'}, {t: 'حكايتنا.', accent: true, kashida: {after: 3, count: 14}, circle: true}]} />
+      <Line from={19.5} to={21} size={150} words={[{t: 'وهذي'}, {t: 'حكايتنا.', accent: true, kashida: {after: 2, count: 14}, circle: true}]} />
     </Page>
 
     <Page from={23.4} to={30}>
