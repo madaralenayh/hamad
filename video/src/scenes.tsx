@@ -3,6 +3,9 @@ import {Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} f
 import timing from './timing.json';
 import {AR_FONT, COLORS, EN_FONT} from './theme';
 import {SVG_ART} from './art';
+import photos from './photos.json';
+
+const PHOTOS = photos as Record<string, string>;
 
 export type Tok = {i: number; t: string; line: number; s: number; e: number};
 export const T = timing as Tok[];
@@ -54,6 +57,9 @@ const WordEl: React.FC<{tok: Tok; c: Chunk}> = ({tok, c}) => {
   }
   const cp = interpolate(f, [tok.s + 0.25, tok.e + 0.4], [0, 1], {...clamp, easing: ease});
   const sp = interpolate(f, [tok.s + 0.3, tok.s + 0.7], [0, 1], clamp);
+  const ul = interpolate(f, [tok.s + 0.15, tok.s + 0.7], [0, 1], {...clamp, easing: ease});
+  const pop = interpolate(f, [tok.s + 0.05, tok.s + 0.75], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
+  const plain = accent && !k && !c.circle?.includes(tok.i);
   return (
     <span style={{position: 'relative', display: 'inline-block', margin: '0 16px', color: accent ? COLORS.accent : COLORS.ink, opacity: p, transform: `translateY(${(1 - p) * 16}px)`, filter: `blur(${(1 - p) * 6}px)`}}>
       {text}
@@ -61,6 +67,18 @@ const WordEl: React.FC<{tok: Tok; c: Chunk}> = ({tok, c}) => {
         <svg viewBox="0 0 300 120" preserveAspectRatio="none" style={{position: 'absolute', left: -34, top: -26, width: 'calc(100% + 68px)', height: 'calc(100% + 46px)', overflow: 'visible'}}>
           <path d="M150 8 C 60 6, 8 30, 12 62 C 16 100, 110 114, 170 110 C 250 104, 296 80, 290 46 C 284 14, 200 4, 120 14" fill="none" stroke={COLORS.accent} strokeWidth={5} strokeLinecap="round" vectorEffect="non-scaling-stroke" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - cp} />
         </svg>
+      )}
+      {plain && (
+        <svg viewBox="0 0 100 14" preserveAspectRatio="none" style={{position: 'absolute', left: 0, bottom: -6, width: '100%', height: 14, overflow: 'visible'}}>
+          <path d="M100 7 C 70 2, 38 11, 0 6" fill="none" stroke={COLORS.accent} strokeWidth={4.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - ul} />
+        </svg>
+      )}
+      {accent && pop > 0 && pop < 1 && (
+        <>
+          {[-1, 0, 1].map((d) => (
+            <span key={d} style={{position: 'absolute', left: '50%', top: 8, width: 14, height: 14, background: COLORS.accent, transform: `translate(${d * pop * 70 - 7}px, ${-pop * 60}px) rotate(45deg) scale(${1 - pop * 0.6})`, opacity: 1 - pop}} />
+          ))}
+        </>
       )}
       {c.strike?.includes(tok.i) && <span style={{position: 'absolute', right: -8, top: '54%', height: 6, background: COLORS.accent, width: `calc(${sp * 100}% + 16px)`}} />}
     </span>
@@ -96,7 +114,7 @@ export const TextPage: React.FC<{c: Chunk; from: number; to: number}> = ({c, fro
   const o = interpolate(f, [to - 0.25, to], [1, 0], clamp);
   const slide = interpolate(f, [to - 0.25, to], [0, -26], {...clamp, easing: ease});
   return (
-    <div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transform: `translateY(${(c.y ?? 0) + slide}px)`, opacity: o}}>
+    <div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transform: `translateY(${(c.y ?? 0) + slide}px) scale(${1 + 0.045 * Math.min(1, Math.max(0, (f - from) / Math.max(to - from, 0.1)))})`, opacity: o}}>
       {lines.map((ln, li) => (
         <div key={li} dir="rtl" style={{fontFamily: AR_FONT, fontWeight: 800, fontSize: size, lineHeight: 1.32, whiteSpace: 'nowrap', textAlign: 'center'}}>
           {ln.map((tk) => (
@@ -111,9 +129,26 @@ export const TextPage: React.FC<{c: Chunk; from: number; to: number}> = ({c, fro
   );
 };
 
+// Letters that can join to the next letter (dual-joining). A kashida may only follow one of these.
+const DUAL = new Set('بتثجحخسشصضطظعغفقكلمنهيئ'.split(''));
+const stripMarks = (t: string) => t.replace(/[\u064B-\u065F\u0670]/g, '');
+
+const validateKashida = (c: Chunk) => {
+  Object.entries(c.kashida ?? {}).forEach(([idx, [after]]) => {
+    const raw = clean(T[Number(idx)].t);
+    // `after` counts characters of the raw token (diacritics included), like Tatweel() does
+    const prev = stripMarks(raw.slice(0, after)).slice(-1);
+    const next = stripMarks(raw.slice(after)).slice(0, 1);
+    if (!prev || !next || !DUAL.has(prev)) {
+      throw new Error(`Bad kashida in "${raw}" after ${after}: "${prev}" cannot join to "${next}"`);
+    }
+  });
+};
+
 /** Lays chunks out in time. `to` of a chunk = start of the next chunk + overlap. */
 export const layout = (chunks: Chunk[]) =>
   chunks.map((c, i) => {
+    validateKashida(c);
     const from = T[c.a].s - 0.1;
     const end = T[c.b].e;
     const nextStart = chunks[i + 1] ? T[chunks[i + 1].a].s - 0.05 : end + 1.6;
@@ -134,6 +169,8 @@ export type Art = {
   w: number;
   rot?: number;
   enter?: Enter;
+  /** if public/photos/<photo>.* exists it replaces the illustration */
+  photo?: string;
 };
 
 const ArtEl: React.FC<{a: Art}> = ({a}) => {
@@ -156,8 +193,20 @@ const ArtEl: React.FC<{a: Art}> = ({a}) => {
   }
   const rot = (a.rot ?? 0) + (e === 'throw' ? (1 - inP) * (a.x < 960 ? -40 : 40) : 0);
   const Svg = SVG_ART[a.name];
+  const photo = a.photo ? PHOTOS[a.photo] : undefined;
+  if (photo) {
+    const k = interpolate(f, [start, end], [1, 1.14], clamp);
+    const pw = a.w * 1.2, ph = a.w * 1.0;
+    return (
+      <div style={{position: 'absolute', left: a.x - pw / 2, top: a.y - ph / 2, width: pw, height: ph, background: '#fff', padding: '14px 14px 46px', boxSizing: 'border-box', boxShadow: '0 16px 30px rgba(0,0,0,.28)', opacity: Math.min(inP * 1.4, 1) * outP, transform: `translate(${tx}px, ${ty + float}px) rotate(${rot}deg)`}}>
+        <div style={{width: '100%', height: '100%', overflow: 'hidden'}}>
+          <Img src={staticFile(`photos/${photo}`)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${k})`}} />
+        </div>
+      </div>
+    );
+  }
   return (
-    <div style={{position: 'absolute', left: a.x - a.w / 2, top: a.y - a.w / 2, width: a.w, height: a.w, opacity: Math.min(inP * 1.4, 1) * outP, transform: `translate(${tx}px, ${ty + float}px) rotate(${rot}deg) scale(${sc})`, mixBlendMode: a.kind === 'img' ? 'multiply' : 'normal', filter: a.kind === 'img' ? undefined : 'drop-shadow(0 14px 14px rgba(26,26,26,.18))', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div style={{position: 'absolute', left: a.x - a.w / 2, top: a.y - a.w / 2, width: a.w, height: a.w, opacity: Math.min(inP * 1.4, 1) * outP, transform: `translate(${tx}px, ${ty + float}px) rotate(${rot}deg) scale(${sc})`, filter: 'drop-shadow(0 12px 12px rgba(26,26,26,.16))', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       {a.kind === 'img' ? <Img src={staticFile(`art/${a.name}.png`)} style={{width: '100%'}} /> : <Svg />}
     </div>
   );
@@ -307,9 +356,9 @@ export const CollageBoard: React.FC = () => {
   const p = interpolate(f, [a, a + 0.8], [0, 1], {...clamp, easing: ease});
   const o = interpolate(f, [b - 0.6, b], [1, 0], clamp);
   const frames = [
-    {at: 305, x: 560, rot: -5, cap: '#01 وجه', img: 'mic'},
-    {at: 308, x: 960, rot: 3, cap: '#02 تجربة', img: 'camera'},
-    {at: 311, x: 1360, rot: -3, cap: '#03 فكرة', svg: 'sprout'},
+    {at: 305, x: 560, rot: -5, no: '#01', cap: 'وجه', img: 'mic'},
+    {at: 308, x: 960, rot: 3, no: '#02', cap: 'تجربة', img: 'camera'},
+    {at: 311, x: 1360, rot: -3, no: '#03', cap: 'فكرة', svg: 'sprout'},
   ];
   return (
     <div style={{position: 'absolute', inset: 0, opacity: o}}>
@@ -327,10 +376,10 @@ export const CollageBoard: React.FC = () => {
         return (
           <div key={fr.at} style={{position: 'absolute', left: fr.x - 190, top: 390, width: 380, height: 460, background: '#fff', padding: '20px 20px 0', boxSizing: 'border-box', boxShadow: '0 14px 26px rgba(0,0,0,.25)', transform: `translateY(${(1 - q) * -900}px) rotate(${fr.rot + (1 - q) * -25}deg)`, opacity: Math.min(q * 3, 1)}}>
             <div style={{width: '100%', height: 320, overflow: 'hidden', background: COLORS.paper, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              {fr.img ? <Img src={staticFile(`art/${fr.img}.png`)} style={{height: '100%', mixBlendMode: 'multiply', transform: 'scale(1.35)'}} /> : Svg ? <div style={{width: 280, height: 280}}><Svg /></div> : null}
+              {fr.img ? <Img src={staticFile(`art/${fr.img}.png`)} style={{height: '100%', transform: 'scale(1.35)'}} /> : Svg ? <div style={{width: 280, height: 280}}><Svg /></div> : null}
               <div style={{position: 'absolute'}} />
             </div>
-            <div dir="rtl" style={{fontFamily: AR_FONT, fontWeight: 700, fontSize: 40, textAlign: 'center', marginTop: 22, color: COLORS.ink}}>{fr.cap}</div>
+            <div dir="rtl" style={{fontFamily: AR_FONT, fontWeight: 700, fontSize: 40, textAlign: 'center', marginTop: 22, color: COLORS.ink}}><span dir="ltr" style={{unicodeBidi: 'isolate', marginLeft: 12, color: COLORS.accent}}>{fr.no}</span>{fr.cap}</div>
           </div>
         );
       })}

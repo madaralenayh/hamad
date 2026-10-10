@@ -25,7 +25,7 @@ const CHUNKS: Chunk[] = [
   {a: 51, b: 55, breaks: [53], accent: [54]},
   {a: 56, b: 59},
   {a: 60, b: 63, breaks: [61]},
-  {a: 64, b: 68, breaks: [65], accent: [67], kashida: {67: [2, 12]}},
+  {a: 64, b: 68, breaks: [65], accent: [67], kashida: {67: [3, 12]}},
   {a: 69, b: 72, accent: [72]},
   // 4. the idea
   {a: 73, b: 76, y: -300},
@@ -42,7 +42,7 @@ const CHUNKS: Chunk[] = [
   {a: 113, b: 116, accent: [116]},
   {a: 117, b: 122, breaks: [119]},
   {a: 123, b: 125},
-  {a: 126, b: 128, accent: [126], kashida: {126: [1, 12]}},
+  {a: 126, b: 128, accent: [126], kashida: {126: [2, 12]}},
   {a: 129, b: 131, accent: [129], kashida: {129: [2, 10]}},
   {a: 132, b: 134},
   {a: 135, b: 138},
@@ -72,7 +72,7 @@ const CHUNKS: Chunk[] = [
   {a: 232, b: 237, breaks: [233], accent: [233, 237]},
   // 8. the name
   {a: 238, b: 243, breaks: [240], y: -300},
-  {a: 245, b: 249, breaks: [246], accent: [249], kashida: {249: [2, 10]}},
+  {a: 245, b: 249, breaks: [246], accent: [249], kashida: {249: [3, 10]}},
   {a: 250, b: 253, breaks: [251]},
   {a: 254, b: 257, breaks: [255]},
   {a: 258, b: 261, breaks: [259], accent: [258]},
@@ -93,22 +93,46 @@ const CHUNKS: Chunk[] = [
   {a: 321, b: 325, breaks: [323], accent: [323], y: 60},
   {a: 326, b: 329, breaks: [327], accent: [329], y: 60},
   {a: 330, b: 332, y: 170},
-  {a: 334, b: 337, breaks: [335], y: 170, accent: [337], kashida: {335: [0, 10]}},
+  {a: 334, b: 337, breaks: [335], y: 170, accent: [337], kashida: {335: [1, 10]}},
 ];
 
 const PAGES = layout(CHUNKS);
 
 const ART: Art[] = [
+  // curiosity, then the small details that pass us by
   {kind: 'img', name: 'magnifier', at: 24, until: 37, x: 1560, y: 215, w: 470, rot: -8},
   {kind: 'img', name: 'camera', at: 42, until: 50, x: 330, y: 205, w: 470, rot: -6, enter: 'throw'},
   {kind: 'img', name: 'mic', at: 43, until: 50, x: 1570, y: 820, w: 470, rot: 5, enter: 'throw'},
+  {kind: 'svg', name: 'newspaper', at: 44, until: 50, x: 1560, y: 230, w: 300, rot: 6, enter: 'throw'},
+  {kind: 'svg', name: 'microscope', at: 54, until: 65, x: 350, y: 235, w: 320, enter: 'left'},
   {kind: 'svg', name: 'globe', at: 66, until: 72, x: 1560, y: 230, w: 330},
+  {kind: 'svg', name: 'sprout', at: 78, until: 86, x: 350, y: 235, w: 320, enter: 'left'},
+  // people and the experts
+  {kind: 'svg', name: 'face', at: 87, until: 93, x: 1560, y: 235, w: 330, enter: 'right', photo: 'patient-portrait'},
+  {kind: 'svg', name: 'signpost', at: 94, until: 97, x: 350, y: 235, w: 320, enter: 'left'},
+  {kind: 'svg', name: 'books', at: 98, until: 105, x: 350, y: 235, w: 320, enter: 'left'},
+  {kind: 'svg', name: 'stethoscope', at: 109, until: 116, x: 350, y: 235, w: 320, enter: 'left', photo: 'doctor'},
   {kind: 'img', name: 'mic', at: 106, until: 122, x: 1580, y: 220, w: 460, rot: -4, enter: 'right'},
-  {kind: 'svg', name: 'books', at: 129, until: 145, x: 350, y: 225, w: 330, enter: 'left'},
+  {kind: 'svg', name: 'lamp', at: 117, until: 122, x: 350, y: 215, w: 300, enter: 'drop', photo: 'operating-room'},
+  // years of learning
+  {kind: 'svg', name: 'books', at: 129, until: 145, x: 350, y: 225, w: 330, enter: 'left', photo: 'medical-study'},
+  {kind: 'svg', name: 'clipboard', at: 135, until: 145, x: 1560, y: 230, w: 300, enter: 'right'},
+  // health, looks, and how we see ourselves
+  {kind: 'svg', name: 'tooth', at: 146, until: 150, x: 350, y: 235, w: 320, enter: 'drop', photo: 'dental'},
+  {kind: 'svg', name: 'mirror', at: 151, until: 155, x: 1560, y: 235, w: 320, enter: 'right', photo: 'skincare'},
   {kind: 'svg', name: 'scales', at: 156, until: 160, x: 1560, y: 230, w: 340, enter: 'drop'},
   {kind: 'img', name: 'magnifier', at: 161, until: 182, x: 330, y: 810, w: 440, rot: 6},
+  {kind: 'svg', name: 'syringe', at: 167, until: 182, x: 1560, y: 235, w: 330, enter: 'right', photo: 'filler'},
+  {kind: 'svg', name: 'scalpel', at: 172, until: 182, x: 350, y: 235, w: 320, enter: 'left', photo: 'surgery'},
+  // how we talk about it
   {kind: 'img', name: 'mic', at: 187, until: 202, x: 350, y: 820, w: 440, rot: -5, enter: 'left'},
+  {kind: 'svg', name: 'headphones', at: 190, until: 202, x: 1560, y: 235, w: 320, enter: 'right'},
   {kind: 'svg', name: 'bulb', at: 226, until: 237, x: 1560, y: 240, w: 340, enter: 'drop'},
+  // what we hope you leave with
+  {kind: 'svg', name: 'face', at: 254, until: 261, x: 1560, y: 235, w: 330, enter: 'right', photo: 'cosmetic'},
+  {kind: 'svg', name: 'clipboard', at: 278, until: 282, x: 350, y: 235, w: 300, enter: 'left', photo: 'consultation'},
+  {kind: 'svg', name: 'headphones', at: 283, until: 288, x: 1560, y: 235, w: 320, enter: 'right', photo: 'podcast'},
+  {kind: 'img', name: 'magnifier', at: 289, until: 299, x: 340, y: 235, w: 430, rot: -6},
 ];
 
 const STAGES = [

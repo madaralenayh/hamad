@@ -118,3 +118,176 @@ export const Typewriter: React.FC = () => (
 );
 
 export const SVG_ART: Record<string, React.FC> = {globe: Globe, bulb: Bulb, sprout: Sprout, scales: Scales, books: Books, typewriter: Typewriter};
+
+/* ---- medical / cosmetic engravings (hand drawn, same language as above) ---- */
+
+export const Tooth: React.FC = () => (
+  <svg {...S}>
+    <Defs id="th" />
+    <ellipse cx="150" cy="274" rx="84" ry="9" fill={INK} opacity={0.12} />
+    <path d="M92 70 C 112 50 136 66 150 66 C 164 66 188 50 208 70 C 232 96 220 140 212 176 C 206 212 202 252 182 252 C 164 252 164 200 150 200 C 136 200 136 252 118 252 C 98 252 94 212 88 176 C 80 140 68 96 92 70Z" fill="#fff" fillOpacity={0.55} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M200 76 C 222 100 212 142 204 178 C 200 206 196 236 184 246 C 192 214 200 160 200 76Z" fill={BLUE} opacity={0.55} />
+    <path d="M200 76 C 222 100 212 142 204 178 C 200 206 196 236 184 246 C 192 214 200 160 200 76Z" fill="url(#h-th)" opacity={0.6} />
+    <path d="M104 90 C 112 80 124 80 134 88" {...line} strokeWidth={2.5} />
+    <path d="M60 60 l10 -10 m-10 0 l10 10 M236 44 l8 -8 m-8 0 l8 8" {...line} stroke={COLORS.accent} strokeWidth={4} />
+  </svg>
+);
+
+export const Syringe: React.FC = () => (
+  <svg {...S}>
+    <Defs id="sy" />
+    <ellipse cx="150" cy="276" rx="110" ry="8" fill={INK} opacity={0.1} />
+    <g transform="rotate(-35 150 150)">
+      <rect x="64" y="128" width="150" height="44" rx="6" fill="#fff" fillOpacity={0.6} stroke={INK} strokeWidth={4} />
+      <rect x="120" y="128" width="94" height="44" rx="6" fill={BLUE} opacity={0.55} />
+      <rect x="120" y="128" width="94" height="44" rx="6" fill="url(#h-sy)" opacity={0.45} />
+      <path d="M76 128 V172 M92 128 V150 M108 128 V150" {...line} strokeWidth={2} />
+      <path d="M214 140 H246 V160 H214 M246 150 H286" {...line} strokeWidth={3} />
+      <path d="M286 150 L300 150" {...line} strokeWidth={2} />
+      <path d="M64 120 V180 M40 120 V180 M40 150 H64" {...line} strokeWidth={4} />
+      <path d="M40 112 H20 V188 H40" {...line} strokeWidth={4} />
+    </g>
+    <circle cx="260" cy="224" r="7" fill={COLORS.accent} opacity={0.9} />
+    <circle cx="244" cy="246" r="4" fill={COLORS.accent} opacity={0.7} />
+  </svg>
+);
+
+export const Scalpel: React.FC = () => (
+  <svg {...S}>
+    <Defs id="sc" />
+    <ellipse cx="150" cy="268" rx="110" ry="8" fill={INK} opacity={0.1} />
+    <g transform="rotate(-28 150 150)">
+      <path d="M40 142 H150 L210 150 L150 166 H40 Q28 154 40 142Z" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+      <path d="M40 142 H150 L210 150 L150 166 H40 Q28 154 40 142Z" fill="url(#h-sc)" opacity={0.35} />
+      <path d="M150 142 L270 150 L150 158 Z" fill="#fff" fillOpacity={0.8} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+      <path d="M60 150 H130" {...line} strokeWidth={2} />
+    </g>
+  </svg>
+);
+
+export const Microscope: React.FC = () => (
+  <svg {...S}>
+    <Defs id="mi" />
+    <ellipse cx="150" cy="276" rx="92" ry="9" fill={INK} opacity={0.12} />
+    <path d="M70 262 H230 V248 H70Z" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M200 250 C 252 232 252 120 204 84" fill="none" stroke={INK} strokeWidth={14} strokeLinecap="round" />
+    <path d="M200 250 C 252 232 252 120 204 84" fill="none" stroke={BLUE} strokeWidth={8} strokeLinecap="round" opacity={0.7} />
+    <g transform="rotate(-24 130 100)">
+      <rect x="112" y="30" width="36" height="104" rx="6" fill="#fff" fillOpacity={0.7} stroke={INK} strokeWidth={4} />
+      <rect x="112" y="76" width="36" height="58" rx="6" fill="url(#h-mi)" opacity={0.55} />
+      <rect x="118" y="130" width="24" height="26" fill={BLUE} stroke={INK} strokeWidth={4} />
+    </g>
+    <path d="M96 200 H196" {...line} strokeWidth={5} />
+    <path d="M110 178 H182" {...line} strokeWidth={3} />
+    <circle cx="124" cy="210" r="4" fill={COLORS.accent} />
+  </svg>
+);
+
+export const Stethoscope: React.FC = () => (
+  <svg {...S}>
+    <Defs id="st" />
+    <ellipse cx="150" cy="278" rx="90" ry="8" fill={INK} opacity={0.1} />
+    <path d="M86 36 C 70 36 66 60 66 82 C 66 140 100 164 128 164 C 156 164 190 140 190 82 C 190 60 186 36 170 36" fill="none" stroke={INK} strokeWidth={9} strokeLinecap="round" />
+    <path d="M86 36 C 70 36 66 60 66 82 C 66 140 100 164 128 164 C 156 164 190 140 190 82 C 190 60 186 36 170 36" fill="none" stroke={BLUE} strokeWidth={4} strokeLinecap="round" />
+    <path d="M128 164 V196 C 128 232 150 244 176 244 C 206 244 222 224 222 198" fill="none" stroke={INK} strokeWidth={9} strokeLinecap="round" />
+    <path d="M128 164 V196 C 128 232 150 244 176 244 C 206 244 222 224 222 198" fill="none" stroke={BLUE} strokeWidth={4} strokeLinecap="round" />
+    <circle cx="222" cy="182" r="24" fill="#fff" fillOpacity={0.75} stroke={INK} strokeWidth={5} />
+    <circle cx="222" cy="182" r="12" fill="url(#h-st)" stroke={INK} strokeWidth={3} />
+    <circle cx="86" cy="32" r="9" fill={INK} /><circle cx="170" cy="32" r="9" fill={INK} />
+  </svg>
+);
+
+export const HandMirror: React.FC = () => (
+  <svg {...S}>
+    <Defs id="mr" />
+    <ellipse cx="150" cy="278" rx="80" ry="8" fill={INK} opacity={0.1} />
+    <circle cx="150" cy="116" r="84" fill={BLUE} opacity={0.35} />
+    <circle cx="150" cy="116" r="84" fill="none" stroke={INK} strokeWidth={7} />
+    <circle cx="150" cy="116" r="72" fill="none" stroke={INK} strokeWidth={2.5} />
+    <path d="M96 78 C 112 52 150 44 176 56" fill="none" stroke="#fff" strokeWidth={9} strokeLinecap="round" opacity={0.9} />
+    <path d="M110 150 C 124 172 176 172 190 150" fill="url(#h-mr)" opacity={0.0} />
+    <path d="M150 200 C 140 214 140 228 146 244 C 150 256 150 262 150 266" fill="none" stroke={INK} strokeWidth={12} strokeLinecap="round" />
+    <path d="M150 200 C 140 214 140 228 146 244 C 150 256 150 262 150 266" fill="none" stroke={BLUE} strokeWidth={5} strokeLinecap="round" />
+    <ellipse cx="150" cy="270" rx="14" ry="9" fill="#fff" fillOpacity={0.7} stroke={INK} strokeWidth={4} />
+    <path d="M232 52 l10 -10 m-10 0 l10 10 M256 84 l7 -7 m-7 0 l7 7" {...line} stroke={COLORS.accent} strokeWidth={4} />
+  </svg>
+);
+
+export const FaceProfile: React.FC = () => (
+  <svg {...S}>
+    <Defs id="fp" />
+    <ellipse cx="150" cy="282" rx="80" ry="8" fill={INK} opacity={0.12} />
+    <path d="M196 270 V214 C 168 208 152 196 154 176 C 140 174 138 166 146 160 C 134 156 136 146 146 142 C 138 136 140 128 150 124 C 140 108 130 82 146 58 C 164 32 206 30 226 52 C 244 72 244 104 238 124 C 234 142 224 152 224 168 C 224 184 238 196 252 206 L 262 270Z" fill="#fff" fillOpacity={0.55} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M226 52 C 244 72 244 104 238 124 C 234 142 224 152 224 168 C 224 184 238 196 252 206 L 262 270 H 226 C 232 240 236 210 228 186 C 224 166 236 144 240 124 C 246 96 244 72 226 52Z" fill={BLUE} opacity={0.55} />
+    <path d="M226 52 C 244 72 244 104 238 124 C 234 142 224 152 224 168 C 224 184 238 196 252 206 L 262 270 H 226 C 232 240 236 210 228 186 C 224 166 236 144 240 124 C 246 96 244 72 226 52Z" fill="url(#h-fp)" opacity={0.5} />
+    <circle cx="168" cy="100" r="3.5" fill={INK} />
+    <path d="M150 90 Q 162 84 176 90" {...line} strokeWidth={3} />
+    <path d="M100 200 l-12 -12 m12 0 l-12 12 M82 150 l8 -8 m-8 0 l8 8" {...line} stroke={COLORS.accent} strokeWidth={4} />
+  </svg>
+);
+
+export const Lamp: React.FC = () => (
+  <svg {...S}>
+    <Defs id="lp" />
+    <ellipse cx="150" cy="286" rx="70" ry="7" fill={INK} opacity={0.1} />
+    <path d="M150 0 V40" {...line} strokeWidth={6} />
+    <path d="M60 100 C 60 62 104 44 150 44 C 196 44 240 62 240 100 Z" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={5} strokeLinejoin="round" />
+    <path d="M60 100 C 60 62 104 44 150 44 C 196 44 240 62 240 100 Z" fill="url(#h-lp)" opacity={0.35} />
+    <path d="M70 100 H230 L252 120 H48Z" fill="#fff" fillOpacity={0.7} stroke={INK} strokeWidth={5} strokeLinejoin="round" />
+    {[0, 1, 2, 3, 4].map((i) => (
+      <circle key={i} cx={88 + i * 31} cy={110} r={5} fill={COLORS.accent} opacity={0.9} />
+    ))}
+    <path d="M110 128 L72 280 M150 128 V280 M190 128 L228 280" stroke={COLORS.accent} strokeWidth={2.5} strokeDasharray="2 10" strokeLinecap="round" opacity={0.7} />
+  </svg>
+);
+
+export const Clipboard: React.FC = () => (
+  <svg {...S}>
+    <Defs id="cb" />
+    <ellipse cx="150" cy="280" rx="86" ry="8" fill={INK} opacity={0.1} />
+    <rect x="62" y="40" width="176" height="232" rx="10" fill={BLUE} opacity={0.5} stroke={INK} strokeWidth={5} />
+    <rect x="80" y="64" width="140" height="190" rx="4" fill="#FBF7EE" stroke={INK} strokeWidth={3} />
+    <rect x="112" y="26" width="76" height="34" rx="8" fill="#fff" fillOpacity={0.8} stroke={INK} strokeWidth={5} />
+    <path d="M98 100 H202 M98 128 H202 M98 156 H170 M98 184 H190 M98 212 H150" {...line} strokeWidth={3} />
+    <path d="M180 214 l10 12 l22 -28" fill="none" stroke={COLORS.accent} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export const Headphones: React.FC = () => (
+  <svg {...S}>
+    <Defs id="hp" />
+    <ellipse cx="150" cy="276" rx="92" ry="8" fill={INK} opacity={0.1} />
+    <path d="M70 170 C 56 70 110 36 150 36 C 190 36 244 70 230 170" fill="none" stroke={INK} strokeWidth={14} strokeLinecap="round" />
+    <path d="M70 170 C 56 70 110 36 150 36 C 190 36 244 70 230 170" fill="none" stroke={BLUE} strokeWidth={7} strokeLinecap="round" />
+    <rect x="44" y="150" width="58" height="104" rx="24" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={5} />
+    <rect x="198" y="150" width="58" height="104" rx="24" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={5} />
+    <rect x="44" y="150" width="58" height="104" rx="24" fill="url(#h-hp)" opacity={0.35} />
+    <rect x="198" y="150" width="58" height="104" rx="24" fill="url(#h-hp)" opacity={0.35} />
+  </svg>
+);
+
+export const Newspaper: React.FC = () => (
+  <svg {...S}>
+    <Defs id="np" />
+    <ellipse cx="150" cy="276" rx="104" ry="8" fill={INK} opacity={0.1} />
+    <path d="M46 60 L252 48 L262 250 L56 262Z" fill="#FBF7EE" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M70 84 L238 74" {...line} strokeWidth={9} />
+    <rect x="74" y="104" width="70" height="56" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={3} transform="rotate(-3 109 132)" />
+    <path d="M158 112 L232 108 M158 128 L232 124 M158 144 L214 142 M74 176 L232 170 M74 192 L232 186 M74 208 L232 202 M74 224 L190 220" {...line} strokeWidth={3} />
+  </svg>
+);
+
+export const Signpost: React.FC = () => (
+  <svg {...S}>
+    <Defs id="sg" />
+    <ellipse cx="150" cy="284" rx="64" ry="7" fill={INK} opacity={0.12} />
+    <path d="M150 20 V280" {...line} strokeWidth={9} />
+    <path d="M150 38 H230 L252 56 L230 74 H150Z" fill={BLUE} opacity={0.6} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M150 98 H70 L48 116 L70 134 H150Z" fill="#fff" fillOpacity={0.7} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M150 158 H224 L246 176 L224 194 H150Z" fill={BLUE} opacity={0.45} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M150 38 H230 L252 56 L230 74 H150Z" fill="url(#h-sg)" opacity={0.35} />
+    <path d="M168 56 H222 M80 116 H132 M168 176 H214" {...line} strokeWidth={2.5} stroke={COLORS.accent} />
+  </svg>
+);
+
+Object.assign(SVG_ART, {tooth: Tooth, syringe: Syringe, scalpel: Scalpel, microscope: Microscope, stethoscope: Stethoscope, mirror: HandMirror, face: FaceProfile, lamp: Lamp, clipboard: Clipboard, headphones: Headphones, newspaper: Newspaper, signpost: Signpost});

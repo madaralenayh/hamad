@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "photos": "node scripts/photos.mjs",
     "studio": "remotion studio src/index.ts",
     "still": "remotion still src/index.ts Main out/still.png",
     "render": "remotion render src/index.ts Main out/fath.mp4"
