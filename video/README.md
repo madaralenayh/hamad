@@ -16,6 +16,15 @@ npm run studio                                   # preview
 npx remotion render src/index.ts Main out/fath.mp4 --codec=h264 --crf=20
 ```
 
+## Fonts (not in this repo)
+
+The Thmanyah font license forbids hosting or sharing the font files, so they are **not committed**.
+Download them from the official site (https://font.thmanyah.com) and copy these three files into `public/fonts/`
+before previewing or rendering:
+
+- `thmanyahsans-Black.woff2`, `thmanyahsans-Bold.woff2` (Arabic text)
+- `thmanyahserifdisplay-Black.woff2` (Latin text)
+
 ## Real photos
 
 Each slot below shows an illustration until a photo with that name exists in `public/photos/`

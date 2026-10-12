@@ -1,2 +1,4 @@
 node_modules
 out
+# Thmanyah font files may not be redistributed or hosted (see its license). Download them from the official site and keep them local.
+public/fonts/
