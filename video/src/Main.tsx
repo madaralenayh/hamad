@@ -1,6 +1,6 @@
 import React from 'react';
-import {AbsoluteFill, Audio, staticFile} from 'remotion';
-import {Art, ArtLayer, Chunk, Closing, CollageBoard, Connector, END, FlightPath, Logo, OpeningDiamond, QuestionMark, ReturnDiamond, TextPage, Timeline, TypewriterScene, layout} from './scenes';
+import {AbsoluteFill} from 'remotion';
+import {Art, ArtLayer, PaperSweep, Chunk, Closing, CollageBoard, Connector, END, FlightPath, Logo, OpeningDiamond, QuestionMark, ReturnDiamond, TextPage, Timeline, TypewriterScene, layout} from './scenes';
 import {Paper} from './Paper';
 
 export const TOTAL_SECONDS = Math.ceil((END + 1.8) * 30) / 30;
@@ -98,6 +98,9 @@ const CHUNKS: Chunk[] = [
 
 const PAGES = layout(CHUNKS);
 
+/** token indices where a torn-paper sweep marks a change of scene (sound design follows the same list) */
+export const SWEEPS = [38, 73, 87, 106, 129, 146, 161, 187, 213, 238, 262, 300, 305, 330];
+
 const ART: Art[] = [
   // curiosity, then the small details that pass us by
   {kind: 'img', name: 'magnifier', at: 24, until: 37, x: 1560, y: 215, w: 470, rot: -8},
@@ -145,7 +148,6 @@ const STAGES = [
 export const Main: React.FC = () => (
   <AbsoluteFill>
     <Paper />
-    <Audio src={staticFile('voice.mp3')} />
     <OpeningDiamond />
     <ReturnDiamond />
     <QuestionMark />
@@ -162,6 +164,9 @@ export const Main: React.FC = () => (
       <TextPage key={i} c={p.c} from={p.from} to={p.to} />
     ))}
     <Closing />
+    {SWEEPS.map((i) => (
+      <PaperSweep key={i} at={i} />
+    ))}
     <Timeline stages={STAGES} />
   </AbsoluteFill>
 );

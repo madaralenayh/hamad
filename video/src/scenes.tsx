@@ -426,3 +426,25 @@ export const Timeline: React.FC<{stages: {label: string; at: number}[]}> = ({sta
     </svg>
   );
 };
+
+/* ----------------------------------------------------------- transitions */
+
+const STRIP = 'polygon(3% 0,0 6%,4% 12%,1% 19%,5% 26%,0 33%,4% 40%,1% 47%,5% 54%,0 61%,4% 68%,1% 75%,5% 82%,0 89%,3% 100%,96% 100%,100% 94%,95% 87%,99% 80%,96% 73%,100% 66%,95% 59%,99% 52%,96% 45%,100% 38%,95% 31%,99% 24%,96% 17%,100% 10%,97% 0)';
+
+/** A torn paper strip that sweeps across the frame right-to-left while the scene underneath changes. */
+export const PaperSweep: React.FC<{at: number}> = ({at}) => {
+  const f = useT();
+  const mid = T[at].s - 0.2;
+  const a = mid - 0.45, b = mid + 0.45;
+  if (f < a || f > b) return null;
+  const w = 520;
+  const p = interpolate(f, [a, b], [0, 1], {...clamp, easing: Easing.bezier(0.55, 0, 0.35, 1)});
+  const x = 1920 + 60 - p * (1920 + w + 140);
+  return (
+    <div style={{position: 'absolute', left: x, top: -40, width: w, height: 1160, transform: 'rotate(3deg)', filter: 'drop-shadow(-14px 0 22px rgba(26,26,26,.22))'}}>
+      <div style={{width: '100%', height: '100%', clipPath: STRIP, background: 'linear-gradient(90deg,#F8F1E1,#EFE4CE 60%,#F4EBD8)'}}>
+        <div style={{position: 'absolute', left: '46%', top: '45%', width: 36, height: 36, background: COLORS.accent, transform: 'rotate(45deg)'}} />
+      </div>
+    </div>
+  );
+};
