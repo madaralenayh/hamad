@@ -231,7 +231,7 @@ export const Logo: React.FC<{at: number; until?: number; y: number; w: number}> 
   return (
     <div style={{position: 'absolute', left: 960 - w / 2, top: y - (w * 458) / 824 / 2, width: w, opacity: o}}>
       <Img src={staticFile('logo.svg')} style={{width: '100%', mixBlendMode: 'multiply', clipPath: `inset(0 0 0 ${(1 - p) * 100}%)`}} />
-      <div style={{position: 'absolute', left: '81.7%', top: '23.4%', width: w * 0.038, height: w * 0.038, background: COLORS.accent, transform: 'translate(-50%,-50%) rotate(45deg)', opacity: Math.max(0, Math.min(1, (p - 0.9) * 10))}} />
+      <div style={{position: 'absolute', left: '82.1%', top: '23.1%', width: w * 0.047, height: w * 0.047, background: COLORS.accent, transform: 'translate(-50%,-50%) rotate(45deg)', opacity: Math.max(0, Math.min(1, (p - 0.9) * 10))}} />
     </div>
   );
 };
